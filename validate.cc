@@ -1,6 +1,8 @@
-// g++ validate.cc -lgmp -lgmpxx -O3 -Wall -pedantic -Wextra -o validate
-// (cpplinted and cppchecked)
-//
+/*
+g++ validate.cc -lgmp -lgmpxx -O3 -Wall -pedantic -Wextra -o validate
+cpplint --filter=-legal/copyright validate.cc
+cppcheck --enable=all --suppress=missingIncludeSystem validate.cc --check-config
+*/
 #include <gmpxx.h>
 #include <assert.h>
 
