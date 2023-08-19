@@ -10,12 +10,25 @@ Since "mpz_class(...)" is not part of Colbert.py, C++ needs to read line by line
 Same validation takes different amount of code in the three languages:  
 ```
 hermann@7600x:~/Colbert_numbers$ wc --lines validate.*
-  64 validate.cc
+  66 validate.cc
    9 validate.gp
   19 validate.py
-  92 total
+  94 total
 hermann@7600x:~/Colbert_numbers$ 
 ```
 
-Here is validation done in all three languages:  
+This is PARI/GP script validate.gp:
+```
+\r Colbert.py
+assert(b) = { if(!(b), error("assertion failed")); }
+print("6 entries of the form [k,n,s,x,y], with p=k*2^n+1, s^2%p==p-1 and p==x^2+y^2");
+foreach(C,v,p=v[1]*2^v[2]+1;\
+  printf("%18s (%d-digit prime)\n",Str(v[1],"*2^",v[2],"+1"),#digits(p));\
+  assert(v[3]^2%p==p-1);\
+  assert(v[4]^2+v[5]^2==p);\
+);
+print("done, all asserts OK");
+```
+
+Here is validation done for all three languages:  
 ![Peek_2023-08-18_23-12.gif](Peek_2023-08-18_23-12.gif)
