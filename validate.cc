@@ -1,8 +1,3 @@
-/*
-g++ validate.cc -lgmp -lgmpxx -O3 -Wall -pedantic -Wextra -o validate
-cpplint --filter=-legal/copyright validate.cc
-cppcheck --enable=all --suppress=missingIncludeSystem validate.cc --check-config
-*/
 #include <gmpxx.h>
 #include <assert.h>
 
@@ -12,34 +7,12 @@ cppcheck --enable=all --suppress=missingIncludeSystem validate.cc --check-config
 const int siz = 10000000;
 char *buf = new char[siz];
 
-mpz_class C[6][5];
-
-mpz_class val(char *buf) {
-    char *q = buf + strlen(buf) - 1;
-    while (!isxdigit(*q)) *q--='\0';
-    return mpz_class(buf);
-}
-
-void read_C() {
-    FILE *src = fopen("Colbert.py", "r");
-
-    buf = fgets(buf, siz, src);
-    for (int i = 0; i < 6; ++i) {
-       buf = fgets(buf, siz, src);
-       for (int j = 0; j < 5; ++j) {
-         buf = fgets(buf, siz, src);
-         C[i][j] = val(buf);
-       }
-       buf = fgets(buf, siz, src);
-    }
-    fclose(src);
-}
+mpz_class C[6][5] =
+#include "Colbert.h"
 
 int main() {
     mpz_class sq = 0, two = 2, p;
     assert(buf);
-
-    read_C();
 
     std::cout << "6 entries of the form [k,n,s,x,y], with p=k*2^n+1, "
               << "s^2%p==p-1 and p==x^2+y^2\n";
